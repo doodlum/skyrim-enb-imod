@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
 
 project(
-	enbimodseparation
+	enbimodseparator
 	VERSION 1.1.0
 	LANGUAGES CXX
 )

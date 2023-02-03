@@ -15,7 +15,7 @@ void IMODSeparation::LoadINI()
 	std::lock_guard<std::shared_mutex> lk(fileLock);
 	CSimpleIniA                        ini;
 	ini.SetUnicode();
-	ini.LoadFile(L"enbseries\\enbimodseparation.ini");
+	ini.LoadFile(L"enbseries\\enbimodseparator.ini");
 
 	bEnableIMODSeparation = ini.GetBoolValue("Settings", "bEnableIMODSeparation", false);
 	sImagespaceFormat = ini.GetValue("Settings", "sImagespaceFormat", "Imagespace - {}");
@@ -30,7 +30,7 @@ void IMODSeparation::SaveINI()
 	ini.SetBoolValue("Settings", "bEnableIMODSeparation", bEnableIMODSeparation);
 	ini.SetValue("Settings", "sImagespaceFormat", sImagespaceFormat.c_str());
 
-	ini.SaveFile(L"enbseries\\enbimodseparation.ini");
+	ini.SaveFile(L"enbseries\\enbimodseparator.ini");
 }
 
 template <typename... Args>
@@ -116,12 +116,12 @@ void IMODSeparation::UpdateENB()
 	enbEnabled = false;
 }
 
-#define TWDEF "group='MOD:IMOD Separation'"
+#define TWDEF "group='MOD:IMOD Separator'"
 
 void IMODSeparation::RefreshUI()
 {
 	auto bar = g_ENB->TwGetBarByEnum(!REL::Module::IsVR() ? ENB_API::ENBWindowType::EditorBarEffects : ENB_API::ENBWindowType::EditorBarObjects);  // ENB misnames its own bar, whoops!
 	g_ENB->TwAddVarRW(bar, "EnableIMODSeparation", ETwType::TW_TYPE_BOOLCPP, &bEnableIMODSeparation, TWDEF);
 	g_ENB->TwAddVarRW(bar, "ImagespaceFormat", ETwType::TW_TYPE_STDSTRING, &sImagespaceFormat, TWDEF " readonly = true");
-	g_ENB->TwDefine("EditorBarEffects/'MOD:IMOD Separation' opened=false");
+	g_ENB->TwDefine("EditorBarEffects/'MOD:IMOD Separator' opened=false");
 }
