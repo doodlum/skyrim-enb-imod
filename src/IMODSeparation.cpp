@@ -17,7 +17,7 @@ void IMODSeparation::LoadINI()
 	ini.SetUnicode();
 	ini.LoadFile(L"enbseries\\enbimodseparation.ini");
 
-	bEnableIMODPassthrough = ini.GetBoolValue("Settings", "bEnableIMODPassthrough", true);
+	bEnableIMODSeparation = ini.GetBoolValue("Settings", "bEnableIMODSeparation", false);
 	sImagespaceFormat = ini.GetValue("Settings", "sImagespaceFormat", "Imagespace - {}");
 }
 
@@ -27,7 +27,7 @@ void IMODSeparation::SaveINI()
 	CSimpleIniA                        ini;
 	ini.SetUnicode();
 
-	ini.SetBoolValue("Settings", "bEnableIMODPassthrough", bEnableIMODPassthrough);
+	ini.SetBoolValue("Settings", "bEnableIMODSeparation", bEnableIMODSeparation);
 	ini.SetValue("Settings", "sImagespaceFormat", sImagespaceFormat.c_str());
 
 	ini.SaveFile(L"enbseries\\enbimodseparation.ini");
@@ -81,7 +81,7 @@ void IMODSeparation::Update()
 	//static RE::ImageSpaceBaseData& baseData = (*(RE::ImageSpaceBaseData*)RELOCATION_ID(514970, 514970).address());
 	backupData = proxyData;
 
-	if (enbEnabled && bEnableIMODPassthrough) {
+	if (enbEnabled && bEnableIMODSeparation) {
 		proxyData.hdr.bloomScale = 1;
 		proxyData.hdr.bloomThreshold = 1;
 		proxyData.hdr.white = 1;
@@ -121,7 +121,7 @@ void IMODSeparation::UpdateENB()
 void IMODSeparation::RefreshUI()
 {
 	auto bar = g_ENB->TwGetBarByEnum(!REL::Module::IsVR() ? ENB_API::ENBWindowType::EditorBarEffects : ENB_API::ENBWindowType::EditorBarObjects);  // ENB misnames its own bar, whoops!
-	g_ENB->TwAddVarRW(bar, "EnableIMODPassthrough", ETwType::TW_TYPE_BOOLCPP, &bEnableIMODPassthrough, TWDEF);
+	g_ENB->TwAddVarRW(bar, "EnableIMODSeparation", ETwType::TW_TYPE_BOOLCPP, &bEnableIMODSeparation, TWDEF);
 	g_ENB->TwAddVarRW(bar, "ImagespaceFormat", ETwType::TW_TYPE_STDSTRING, &sImagespaceFormat, TWDEF " readonly = true");
 	g_ENB->TwDefine("EditorBarEffects/'MOD:IMOD Separation' opened=false");
 }

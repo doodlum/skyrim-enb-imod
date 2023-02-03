@@ -19,7 +19,7 @@ public:
 
 	std::shared_mutex fileLock;
 
-	bool        bEnableIMODPassthrough;
+	bool        bEnableIMODSeparation;
 	std::string sImagespaceFormat;
 
 	bool enbEnabled = false;
